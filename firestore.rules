@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ── Helper functions ─────────────────────────────────────────────────────
+    function isRealUser() {
+      return request.auth != null
+          && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+    function isValidRecipe() {
+      let d = request.resource.data;
+      return
+        // Required fields present
+        d.keys().hasAll(['title', 'description', 'ingredients', 'steps',
+                         'category', 'difficulty', 'isUserAdded', 'createdBy',
+                         'prepTime', 'cookTime', 'servings', 'rating', 'tags']) &&
+        // Title: 3–120 chars, no blank strings
+        d.title is string && d.title.size() >= 3 && d.title.size() <= 120 &&
+        // Description: at least 10 chars
+        d.description is string && d.description.size() >= 10 &&
+        // Must have at least 1 ingredient and 1 step
+        d.ingredients is list && d.ingredients.size() >= 1 &&
+        d.steps      is list && d.steps.size()       >= 1 &&
+        // Category must be a known value
+        d.category in ['Breakfast', 'Lunch', 'Dinner', 'Dessert',
+                       'Snack', 'Drinks', 'Soup', 'Salad', 'Sides'] &&
+        // Difficulty must be valid
+        d.difficulty in ['Easy', 'Medium', 'Hard'] &&
+        // Numeric fields must be non-negative
+        d.prepTime is int && d.prepTime >= 0 &&
+        d.cookTime is int && d.cookTime >= 0 &&
+        d.servings is int && d.servings >= 1 &&
+        // Rating must be 0.0–5.0
+        d.rating is number && d.rating >= 0 && d.rating <= 5 &&
+        // Tags must be a list (can be empty)
+        d.tags is list &&
+        // App-level flags
+        d.isUserAdded == true &&
+        d.createdBy == request.auth.uid;
+    }
+    function isValidRatingUpdate() {
+      // Allow a rating-only update from any signed-in real user
+      let d = request.resource.data;
+      let unchanged = request.resource.data.diff(resource.data).affectedKeys()
+                        .hasOnly(['rating']);
+      return isRealUser() && unchanged
+          && d.rating is number && d.rating >= 0 && d.rating <= 5;
+    }
+    // ── Recipes ──────────────────────────────────────────────────────────────
+    match /recipes/{recipeId} {
+      // Guests + real users can read
+      allow read: if request.auth != null;
+      // Only real (non-anonymous) users can create, with full validation
+      allow create: if isRealUser() && isValidRecipe();
+      // Owner can do a full update (edit), anyone real can update rating only
+      allow update: if (isRealUser() && isOwner(resource.data.createdBy) && isValidRecipe())
+                    || isValidRatingUpdate();
+      // Only the owner can delete
+      allow delete: if isRealUser() && isOwner(resource.data.createdBy);
+    }
+    // ── Favorites ────────────────────────────────────────────────────────────
+    match /users/{uid}/favorites/{recipeId} {
+      allow read, write: if isOwner(uid);
+    }
+    // ── Per-user ratings ─────────────────────────────────────────────────────
+    match /users/{uid}/ratings/{recipeId} {
+      allow read, write: if isOwner(uid);
+    }
+    // ── User profiles (for future use) ───────────────────────────────────────
+    match /users/{uid} {
+      allow read:  if request.auth != null;
+      allow write: if isOwner(uid);
+    }
+    // Block everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
