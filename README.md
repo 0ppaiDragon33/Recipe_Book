@@ -38,18 +38,7 @@ Culinary Cookbook lets users discover, save, and create their own recipes. Recip
 ---
 
 ## Screenshots
-
-> Add 3–5 screenshots of your app here.
-> Suggested screens to capture: Home, Recipe Detail, Cook Mode, Shopping List, Settings.
->
-> Example:
-> ```
-> ![Home Screen](https://github.com/0ppaiDragon33/Recipe_Book/blob/5c8d980e52229405710b52b5521bce58c90a9163/Favorites.png))
-> ![Recipe Detail](screenshots/detail.png)
-> ![Cook Mode](screenshots/cook_mode.png)
-> ![Shopping List](screenshots/shopping.png)
-> ![Settings](screenshots/settings.png)
-> ```
+![Home Screen](https://github.com/0ppaiDragon33/Recipe_Book/blob/74489868cfa3c4d460c75a11adbdaf9984d0017e/Homescreen.png)
 
 ---
 
