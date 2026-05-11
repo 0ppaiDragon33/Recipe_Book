@@ -42,6 +42,7 @@ Culinary Cookbook lets users discover, save, and create their own recipes. Recip
 - Favorites ![Favorites](https://github.com/0ppaiDragon33/Recipe_Book/blob/ed013414f8fad2d557ca40e650eef24deaf46f34/Favorites.png)
 - CookMode ![CookMode](https://github.com/0ppaiDragon33/Recipe_Book/blob/3bbd5f7cdc807e38631ebc58842282bfe9e94bfc/CookMode.png)
 - ShoppingList ![ShoppingList](https://github.com/0ppaiDragon33/Recipe_Book/blob/f9cc1fa790da56064833783656c6dd39344e14d6/Shopping%20List.png)
+- Settings ![Settings](https://github.com/0ppaiDragon33/Recipe_Book/blob/7a6c425f2f63edbeeb40b9ea0a5f8fb24e6f8ca4/Settings.png)
 
 ---
 
