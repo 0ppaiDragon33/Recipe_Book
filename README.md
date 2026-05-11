@@ -44,7 +44,7 @@ Culinary Cookbook lets users discover, save, and create their own recipes. Recip
 >
 > Example:
 > ```
-> ![Home Screen](screenshots/home.png)
+> ![Home Screen](https://github.com/0ppaiDragon33/Recipe_Book/blob/5c8d980e52229405710b52b5521bce58c90a9163/Favorites.png))
 > ![Recipe Detail](screenshots/detail.png)
 > ![Cook Mode](screenshots/cook_mode.png)
 > ![Shopping List](screenshots/shopping.png)
