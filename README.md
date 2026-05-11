@@ -39,6 +39,7 @@ Culinary Cookbook lets users discover, save, and create their own recipes. Recip
 
 ## Screenshots
 - Home Screen ![Home Screen](https://github.com/0ppaiDragon33/Recipe_Book/blob/74489868cfa3c4d460c75a11adbdaf9984d0017e/Homescreen.png)
+- Favorites ![Favorites](https://github.com/0ppaiDragon33/Recipe_Book/blob/ed013414f8fad2d557ca40e650eef24deaf46f34/Favorites.png)
 
 ---
 
